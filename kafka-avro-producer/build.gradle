@@ -29,6 +29,7 @@ dependencies {
 	compile("org.apache.avro:avro:1.8.2")
 	compile('org.springframework.kafka:spring-kafka')
 	compile("io.confluent:kafka-avro-serializer:5.3.0")
+	compile("com.google.code.gson:gson:2.8.5")
 	testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 

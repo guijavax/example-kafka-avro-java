@@ -2,6 +2,9 @@ package com.example.api.kafkaavroproducer.controller;
 
 import com.example.api.entitie.Cliente;
 import com.example.api.kafkaavroproducer.entitie.ClienteEntitie;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +27,12 @@ public class ClienteController {
     private String topic;
 
     @PostMapping("/post")
-    public void post(@RequestBody ClienteEntitie clienteEntitie) {
-        Cliente cliente = new Cliente(clienteEntitie.getNome(), clienteEntitie.getCpf(), clienteEntitie.getDataNasc());
-        this.template.send(topic, cliente);
+    public void post(@RequestBody ClienteEntitie clienteEntitie) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        Cliente cl = mapper.readValue(new Gson().toJson(clienteEntitie), Cliente.class);
+
+        this.template.send(topic, cl);
         LOGGER.info("ok");
     }
 }
